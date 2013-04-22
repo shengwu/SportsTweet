@@ -39,3 +39,6 @@ gem 'jquery-rails'
 
 gem 'twitter'
 gem 'tweetstream'
+
+# Ruby messaging
+gem 'faye'
