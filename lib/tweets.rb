@@ -1,5 +1,7 @@
 require 'rubygems'
 require 'tweetstream'
+require 'net/http'
+require 'uri'
 
 TweetStream.configure do |config|
   config.consumer_key       = ENV['CONSUMER_KEY']
@@ -9,7 +11,8 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
-
-TweetStream::Client.new.track('lebron') do |status|
-  puts "#{status.text}"
+TweetStream::Client.new.track('lebron', 'basketball') do |status|
+  #puts "#{status.text}"
+  cmd = "curl http://localhost:9292/faye -d 'message={\"channel\":\"/tweets\", \"data\":\"" + status.text + "\"}'"
+  system(cmd)
 end

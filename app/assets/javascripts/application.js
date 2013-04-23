@@ -17,6 +17,8 @@
 $(function() {
     var faye = new Faye.Client('http://localhost:9292/faye');
     faye.subscribe('/tweets', function(data) {
-        alert(data);
+        var elem = '<div class="tweet" style="display: none;">' + data + '</div>';
+        $('.tweets').prepend(elem);
+        $('.tweet').slideDown();
     });
 });
