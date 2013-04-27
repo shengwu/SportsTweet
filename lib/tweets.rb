@@ -2,6 +2,7 @@ require 'rubygems'
 require 'tweetstream'
 require 'net/http'
 require 'uri'
+require 'json'
 
 TweetStream.configure do |config|
   config.consumer_key       = ENV['CONSUMER_KEY']
@@ -11,8 +12,10 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
+uri = URI.parse("http://localhost:9292/faye")
+
 TweetStream::Client.new.track('lebron', 'basketball') do |status|
-  #puts "#{status.text}"
-  cmd = "curl http://localhost:9292/faye -d 'message={\"channel\":\"/tweets\", \"data\":\"" + status.text + "\"}'"
-  system(cmd)
+  puts "#{status.text}"
+  message = {'channel' => '/tweets', 'data' => status.text}
+  Net::HTTP.post_form(uri, :message => message.to_json);
 end
