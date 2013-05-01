@@ -1,0 +1,61 @@
+<%= form_for(@tweet) do |f| %>
+  <% if @tweet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
+
+      <ul>
+      <% @tweet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :text %><br />
+    <%= f.text_area :text %>
+  </div>
+  <div class="field">
+    <%= f.label :favorite_count %><br />
+    <%= f.number_field :favorite_count %>
+  </div>
+  <div class="field">
+    <%= f.label :from_user_name %><br />
+    <%= f.text_field :from_user_name %>
+  </div>
+  <div class="field">
+    <%= f.label :created_at %><br />
+    <%= f.text_field :created_at %>
+  </div>
+  <div class="field">
+    <%= f.label :id_str %><br />
+    <%= f.text_field :id_str %>
+  </div>
+  <div class="field">
+    <%= f.label :retweet_count %><br />
+    <%= f.number_field :retweet_count %>
+  </div>
+  <div class="field">
+    <%= f.label :hashtags %><br />
+    <%= f.text_area :hashtags %>
+  </div>
+  <div class="field">
+    <%= f.label :media %><br />
+    <%= f.text_area :media %>
+  </div>
+  <div class="field">
+    <%= f.label :urls %><br />
+    <%= f.text_area :urls %>
+  </div>
+  <div class="field">
+    <%= f.label :user_mentions %><br />
+    <%= f.text_area :user_mentions %>
+  </div>
+  <div class="field">
+    <%= f.label :place %><br />
+    <%= f.text_area :place %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

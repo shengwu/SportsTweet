@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  text: MyText
+  favorite_count: 1
+  from_user_name: MyString
+  created_at: MyString
+  id_str: MyString
+  retweet_count: 1
+  hashtags: MyText
+  media: MyText
+  urls: MyText
+  user_mentions: MyText
+  place: MyText
+
+two:
+  text: MyText
+  favorite_count: 1
+  from_user_name: MyString
+  created_at: MyString
+  id_str: MyString
+  retweet_count: 1
+  hashtags: MyText
+  media: MyText
+  urls: MyText
+  user_mentions: MyText
+  place: MyText
