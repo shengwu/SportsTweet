@@ -1,4 +1,4 @@
-<h1>Listing tweets</h1>
+<h1>Listing 10 tweets</h1>
 
 <table>
   <tr>
@@ -18,7 +18,7 @@
     <th></th>
   </tr>
 
-<% @tweets.each do |tweet| %>
+<% @tweets.first(10).each do |tweet| %>
   <tr>
     <td><%= tweet.text %></td>
     <td><%= tweet.favorite_count %></td>

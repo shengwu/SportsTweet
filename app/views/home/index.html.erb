@@ -7,6 +7,18 @@
     <div class="container">
       <h1>SportsTweet</h1>
       <p>Link to saved tweets: <%= link_to "Saved tweets", tweets_path %></p>
+      <div class="popular">
+        <table>
+          <tr>
+            <th width="100">Team</th>
+            <th># tweets</th>
+          </tr>
+        <% show_popular.each do |team, count| %>
+          <tr><td><%= team %></td><td><%= count %></td></tr>
+        <% end %>
+      </table>
+      </div>
+      <hr>
       <p>Here's a stream of tweets about lebron or basketball:</p>
       <div class="tweets">
       </div>

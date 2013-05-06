@@ -4,7 +4,7 @@ class CreateTweets < ActiveRecord::Migration
       t.text :text
       t.integer :favorite_count
       t.string :from_user_name
-      t.string :created_at
+      t.datetime :created_at
       t.string :id_str
       t.integer :retweet_count
       t.text :hashtags
