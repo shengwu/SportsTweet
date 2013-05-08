@@ -9,21 +9,32 @@
 
 html,
 body {
-    background: #f0f0f0;
-    font-family: Helvetica, Arial, sans-serif;
+    background: #333;
+    font-family: Lato, Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #b0c4de;
+}
+
+.chart {
+    margin-top: 10px;
 }
 
 .container {
-    width: 500px;
-    background: white;
-    margin: 10px auto;
+    width: 980px;
     padding: 20px 50px;
+    color: white;
 }
 
 .popular {
+    width: 400px;
     margin: 10px 0;
 }
-
+.tweets {
+    width: 500px;
+    float: right;
+}
 .tweet {
     padding: 12px 0;
 }
