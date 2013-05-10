@@ -1,3 +1,5 @@
+require File.join(File.expand_path(File.dirname(__FILE__)),
+                  '../config/environment')
 require 'rubygems'
 require 'twitter'
 
@@ -10,6 +12,7 @@ Twitter.configure do |config|
 	#config.auth_method        = :oauth
 end
 
+
 cursor = "-1"
 @followerIds = []
 while cursor != 0 do
@@ -19,3 +22,14 @@ while cursor != 0 do
 	@followerIds+= followers.ids
 	sleep(2)
 end
+
+# cursor = "-1"
+# while cursor != 0 do
+# 	followers = Twitter.follower_ids('ESPNNBA',{:cursor=>cursor})
+# 	followers.each do |follower|
+# 		f = Follower.create(:id =>follower.id)
+# 		puts "#{follower}"
+# 	end
+# 	cursor = followers.next_cursor
+# 	sleep(2)
+# end
