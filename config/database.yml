@@ -4,7 +4,7 @@ development:
   database: sportstweet
   pool: 5
   username: sportstweet
-  password: 
+  password: pass
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -15,7 +15,7 @@ test:
   database: sportstweet-test
   pool: 5
   username: sportstweet
-  password:
+  password: pass
 
 production:
   adapter: postgresql
@@ -23,4 +23,4 @@ production:
   database: sportstweet
   pool: 5
   username: sportstweet
-  password:
+  password: pass

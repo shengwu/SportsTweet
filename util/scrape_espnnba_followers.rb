@@ -13,23 +13,25 @@ Twitter.configure do |config|
 end
 
 
+# cursor = "-1"
+# @followerIds = []
+# while cursor != 0 do
+# 	followers = Twitter.follower_ids('ESPNNBA',{:cursor=>cursor})
+# 	cursor = followers.next_cursor
+# 	puts "#{followers.ids}"
+# 	@followerIds+= followers.ids
+# 	sleep(2)
+# end
+
 cursor = "-1"
-@followerIds = []
 while cursor != 0 do
 	followers = Twitter.follower_ids('ESPNNBA',{:cursor=>cursor})
 	cursor = followers.next_cursor
-	puts "#{followers.ids}"
-	@followerIds+= followers.ids
+	array_of_followers=followers.ids
+	# puts "#{array_of_followers}" 
+	array_of_followers.each do |follower|
+		f = Follower.create(:guid =>follower)
+		# puts "#{follower}"
+	end
 	sleep(2)
 end
-
-# cursor = "-1"
-# while cursor != 0 do
-# 	followers = Twitter.follower_ids('ESPNNBA',{:cursor=>cursor})
-# 	followers.each do |follower|
-# 		f = Follower.create(:id =>follower.id)
-# 		puts "#{follower}"
-# 	end
-# 	cursor = followers.next_cursor
-# 	sleep(2)
-# end
