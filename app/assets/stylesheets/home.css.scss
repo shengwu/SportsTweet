@@ -44,11 +44,11 @@ a {
 }
 .popular_picture img {
     margin: 10px 0;
-    max-width: 400px;
-    max-height: 400px;
+    max-width: 360px;
+    max-height: 360px;
 }
 
-.tweets {
+.tweet_container {
     clear: both;
     border-top: 1px solid #555;
     padding-top: 10px;
@@ -57,5 +57,5 @@ a {
     padding: 12px 0;
 }
 .tweet + .tweet {
-    border-top: 1px solid #eee;
+    border-top: 1px solid #555;
 }

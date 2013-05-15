@@ -16,17 +16,18 @@
         <h3> Trending Picture </h3>
           <% tweet = get_picture %>
           <img src= <%= tweet.first %> />
-          <h3> <%= tweet.second %> </h3>
+          <h4> <%= tweet.second %> </h4>
       </div>
-      <div>
-      <h3>Tweets about the NBA:</h3>
-      </div>
-      <div class="tweets">
+      <div class="tweet_container">
+        <h3>Tweets about the NBA:</h3>
+        <div class="tweets">
+        </div>
       </div>
 
 
     </div>
     <script type="text/javascript">
+        // Set up initial bar graph
         var w = 400,
             h = 400,
             colors = d3.scale.category20();
