@@ -1,3 +1,5 @@
+require "uri"
+
 module HomeHelper
   def show_popular()
     tweets = Tweet.select("text")
@@ -25,5 +27,24 @@ module HomeHelper
       end
     end
     teams.sort_by{|_key, value| value}.reverse
+  end
+
+  def get_picture()
+    a=nil
+    count=0
+    favorites=-1
+    Tweet.all.entries.each do |tweet|
+        if tweet.media != [] and tweet.favorite_count > favorites
+            a= tweet.media[0].media_url
+            favorites = tweet.favorite_count
+        end
+        count+=1
+        puts count
+        if count == 10000
+            puts count
+            break
+        end
+    end
+    a
   end
 end
