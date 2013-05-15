@@ -1,72 +1,12 @@
 <html>
   <head>
     <title>SportsTweet</title>
-    <%= javascript_include_tag "http://d3js.org/d3.v3.min.js" %>
     <%= javascript_include_tag "http://localhost:9292/faye.js" %>
-    <script type="text/javascript">
-      $(function() {
-        var w = 400,
-            h = 400,
-            r = 200,
-            color = d3.scale.category20c();
-     
-        var data = [
-            <% show_popular.each do |team, count| %>
-              {"label":"<%= team %>", "value": <%= count %>},
-            <% end %>
-        ];
-
-        var total = 0;
-        for (var i = 0; i < data.length; i++) {
-          total += data[i].value;
-        }
-        
-        var vis = d3.select(".chart")
-                    .data([data])
-                    .attr("width", w)
-                    .attr("height", h)
-                    .append("svg:g")
-                    .attr("transform", "translate(" + r + "," + r + ")");
-     
-        var arc = d3.svg.arc()
-                    .outerRadius(r);
-     
-        var pie = d3.layout.pie()
-                    .value(function(d) { return d.value; });
-     
-        var arcs = vis.selectAll("g.slice")
-                      .data(pie)
-                      .enter()
-                      .append("svg:g")
-                      .attr("class", "slice");
-     
-        arcs.append("svg:path")
-            .attr("fill", function(d, i) { return color(i); } )
-            .attr("d", arc);
-
-        arcs.append("svg:text")
-            .attr("transform", function(d) {
-              d.innerRadius = 0;
-              d.outerRadius = r;
-              return "translate(" + arc.centroid(d) + ")";
-            })
-            .attr("text-anchor", "middle")
-            .text(function(d, i) { 
-              if (d.value / total > .05) {
-                return data[i].label + " (" + d.value + ")"; 
-              }
-            });
-      });
-    </script>
   </head>
   <body>
     <div class="container">
       <h1>SportsTweet</h1>
       <!--<p>Link to saved tweets: <%= link_to "Saved tweets", tweets_path %></p>-->
-
-      <div class="tweets">
-        <p>Here's a stream of tweets by SportsCenter followers:</p>
-      </div>
 
       <div class="popular">
         <h3>Most mentioned teams:</h3>
@@ -76,7 +16,54 @@
         <h3> Trending Picture </h3>
           <img src=<%= get_picture %> />
       </div>
+      <div class="tweets">
+        <h3>Tweets about the NBA:</h3>
+      </div>
+
 
     </div>
+    <script type="text/javascript">
+        var w = 400,
+            h = 400,
+            colors = d3.scale.category20();
+     
+        var data = [
+            <% show_popular.each do |team, count| %>
+              {"label":"<%= team %>", "value": <%= count %>},
+            <% end %>
+        ];
+        var values = data.map(function(d, i) { return d.value; });
+
+        var x = d3.scale.linear()
+                  .domain([0, d3.max(values)])
+                  .range([0, w]);
+     
+        var y = d3.scale.ordinal()
+                  .domain(values)
+                  .rangeBands([0, h]);
+
+        var chart = d3.select(".chart")
+                      .attr("width", w)
+                      .attr("height", h);
+
+        chart.selectAll("rect")
+             .data(values)
+             .enter().append("rect")
+             .attr("y", y)
+             .attr("width", x)
+             .attr("height", y.rangeBand())
+             .style("fill", function(d, i) { return colors(i); });
+
+        chart.selectAll("text")
+             .data(values)
+             .enter().append("text")
+             .attr("x", 10)
+             .attr("y", function(d) { return y(d) + y.rangeBand() / 2; })
+             .attr("dx", -3)
+             .attr("dy", ".35em")
+             //.attr("text-anchor", "end")
+             .text(function(d, i) { return data[i].label + " (" + d + " mentions)"; });
+
+    </script>
   </body>
 </html>
