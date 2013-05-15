@@ -20,20 +20,38 @@ a {
 .chart {
     margin-top: 10px;
 }
+.chart text {
+    fill: white;
+}
 
 .container {
-    width: 980px;
+    margin: 0 auto;
+    width: 840px;
     padding: 20px 50px;
     color: white;
 }
 
-.popular {
-    width: 400px;
+.popular,
+.popular_picture {
     margin: 10px 0;
+    width: 400px;
 }
-.tweets {
-    width: 500px;
+.popular {
+    float: left;
+}
+.popular_picture {
     float: right;
+}
+.popular_picture img {
+    margin: 10px 0;
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.tweets {
+    clear: both;
+    border-top: 1px solid #555;
+    padding-top: 10px;
 }
 .tweet {
     padding: 12px 0;
