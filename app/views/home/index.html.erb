@@ -14,10 +14,14 @@
       </div>
       <div class="popular_picture">
         <h3> Trending Picture </h3>
-          <img src=<%= get_picture %> />
+          <% tweet = get_picture %>
+          <img src= <%= tweet.first %> />
+          <h3> <%= tweet.second %> </h3>
+      </div>
+      <div>
+      <h3>Tweets about the NBA:</h3>
       </div>
       <div class="tweets">
-        <h3>Tweets about the NBA:</h3>
       </div>
 
 

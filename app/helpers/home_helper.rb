@@ -30,21 +30,25 @@ module HomeHelper
   end
 
   def get_picture()
-    a=nil
+    picked_tweet_url=nil
+    picked_tweet_text=nil
     count=0
     favorites=-1
+
     Tweet.all.entries.each do |tweet|
         if tweet.media != [] and tweet.favorite_count > favorites
-            a= tweet.media[0].media_url
+            picked_tweet_url= tweet.media[0].media_url
+            picked_tweet_text = tweet.text
+            picked_tweet_text.slice! picked_tweet_url
+
             favorites = tweet.favorite_count
         end
-        count+=1
-        puts count
+
         if count == 10000
-            puts count
             break
         end
+        count+=1
     end
-    a
+    [picked_tweet_url,picked_tweet_text]
   end
 end
