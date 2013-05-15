@@ -28,6 +28,10 @@ $(function() {
         }
         */
         $('.tweets').prepend(elem);
-        $('.tweet').slideDown();
+        var tweets = $('.tweet');
+        tweets.slideDown();
+        if (tweets.length > 6) {
+            $(tweets[tweets.length-1]).remove();
+        }
     });
 });
