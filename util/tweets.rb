@@ -14,26 +14,27 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
+
 uri = URI.parse("http://localhost:9292/faye")
 
-# TweetStream::Client.new.track('lebron', 'basketball') do |status|
-#   puts "#{status.text}"
-#   message = {'channel' => '/tweets', 'data' => status.text}
-#   Net::HTTP.post_form(uri, :message => message.to_json);
-# end
-
-count=0
-array_of_followers=Array.new(5000)
-Follower.all.entries.each do |follower|
-	array_of_followers.append(follower.guid)
-	count+=1
-  puts count
-	if count == 4999
-		break
-	end
-end
-TweetStream::Client.new.follow(array_of_followers) do |status|
+TweetStream::Client.new.track('nba') do |status|
   puts "#{status.text}"
   message = {'channel' => '/tweets', 'data' => status.text}
   Net::HTTP.post_form(uri, :message => message.to_json);
 end
+
+# count=0
+# array_of_followers=Array.new(5000)
+# Follower.all.entries.each do |follower|
+#   array_of_followers.append(follower.guid)
+#   count+=1
+#   puts count
+# 	if count == 4999
+# 		break
+# 	end
+# end
+# TweetStream::Client.new.follow(array_of_followers) do |status|
+#   puts "#{status.text}"
+#   message = {'channel' => '/tweets', 'data' => status.text}
+#   Net::HTTP.post_form(uri, :message => message.to_json);
+# end
