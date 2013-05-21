@@ -14,8 +14,9 @@ TweetStream.configure do |config|
 end
 
 TweetStream::Client.new.track('nba') do |tweet|
-  if tweet.lang == "en" or tweet.lang == nil
-    puts "#{tweet.text}"
+  if (tweet.lang == "en" or tweet.lang == nil) 
+    puts tweet.text
+    puts tweet.user.id
     t = Tweet.create(:created_at => tweet.created_at,
                      :favorite_count => tweet.favorite_count,
                      :from_user_name => tweet.user.name,
@@ -26,6 +27,7 @@ TweetStream::Client.new.track('nba') do |tweet|
                      :retweet_count => tweet.retweet_count,
                      :text => tweet.text,
                      :urls => tweet.urls,
-                     :user_mentions => tweet.user_mentions)
+                     :user_mentions => tweet.user_mentions,
+                     :user_id => tweet.user.id)
   end
 end
