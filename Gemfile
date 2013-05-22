@@ -43,3 +43,6 @@ gem 'tweetstream'
 gem 'faye'
 
 gem 'thin'
+
+#cron job
+gem 'whenever', :require => false
