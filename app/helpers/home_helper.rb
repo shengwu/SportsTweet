@@ -51,4 +51,11 @@ module HomeHelper
     end
     [picked_tweet_url,picked_tweet_text]
   end
+
+  def tweet_timeframe()
+    oldest = Tweet.first.created_at
+    newest = Tweet.last.created_at
+    seconds = newest - oldest
+    (seconds/60).round(1)  #return number of minutes
+  end
 end

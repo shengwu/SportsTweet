@@ -7,7 +7,10 @@
     <div class="container">
       <h1>SportsTweet</h1>
       <!--<p>Link to saved tweets: <%= link_to "Saved tweets", tweets_path %></p>-->
-
+      <div class = "tweet_timeframe">
+        <% times = tweet_timeframe %>
+        <p> Tweets from the past <%= times %> minutes </p>
+      </div>
       <div class="popular">
         <h3>Most mentioned teams:</h3>
         <svg class="chart"></svg>
