@@ -8,8 +8,9 @@
       <h1>SportsTweet</h1>
       <!--<p>Link to saved tweets: <%= link_to "Saved tweets", tweets_path %></p>-->
       <div class = "tweet_timeframe">
-        <% times = tweet_timeframe %>
-        <p> Tweets from the past <%= times %> minutes </p>
+        <% elapsed_minutes = tweet_timeframe %>
+        <% num_tweets = tweet_count %>
+        <p> <%= num_tweets %> tweets from the past <%= elapsed_minutes %> minutes </p>
       </div>
       <div class="popular">
         <h3>Most mentioned teams:</h3>

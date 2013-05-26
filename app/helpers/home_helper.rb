@@ -58,4 +58,8 @@ module HomeHelper
     seconds = newest - oldest
     (seconds/60).round(1)  #return number of minutes
   end
+
+  def tweet_count()
+    Tweet.count
+  end
 end
