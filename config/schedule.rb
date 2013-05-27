@@ -24,3 +24,10 @@ every 15.minutes do
   # rake "my:rake:task"
   # command "/usr/bin/my_great_command"
 end
+
+every 5.minutes do
+	command "ruby /home/rc/SportsTweet/util/update_tweets.rb"
+end
+
+#whenever --update-crontab store
+#^ update cron job
