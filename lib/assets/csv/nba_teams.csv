@@ -1,0 +1,31 @@
+id,name,division
+1,Boston Celtics,Atlantic
+2,Brooklyn Nets,Atlantic
+3,New York Knicks,Atlantic
+4,Philadelphia 76ers,Atlantic
+5,Toronto Raptors,Atlantic
+6,Los Angeles Lakers,Pacific
+7,Golden State Warriors,Pacific
+8,Los Angeles Clippers,Pacific
+9,Phoenix Suns,Pacific
+10,Sacramento Kings,Pacific
+11,Chicago Bulls,Central
+12,Cleveland Cavaliers,Central
+13,Detroit Pistons,Central
+14,Indiana Pacers,Central
+15,Milwaukee Bucks,Central
+16,Dallas Mavericks,Southwest
+17,Houston Rockets,Southwest
+18,Memphis Grizzlies,Southwest
+19,New Orleans Pelicans,Southwest
+20,San Antonio Spurs,Southwest
+21,Atlanta Hawks,Southeast
+22,Charlotte Bobcats,Southeast
+23,Miami Heat,Southeast
+24,Orlando Magic,Southeast
+25,Washington Wizards,Southeast
+26,Denver Nuggets,Northwest
+27,Minnesota Timberwolves,Northwest
+28,Oklahoma City Thunder,Northwest
+29,Portland Blazers,Northwest
+30,Utah Jazz,Northwest

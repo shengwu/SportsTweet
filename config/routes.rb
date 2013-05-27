@@ -1,9 +1,8 @@
 SportsTweet::Application.routes.draw do
   resources :followers
-
-
   resources :tweets
-
+  resources :teams
+  resources :players
 
   root :to => "home#index"
   get "home/index"
