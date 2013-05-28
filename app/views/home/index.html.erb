@@ -27,13 +27,14 @@
       </div> -->
       <% pictures = get_pictures %>
       <div id="slides">
-        <%= image_tag pictures[0][0] %>
-        <%= image_tag pictures[0][1] %>
-        <%= image_tag pictures[0][2] %>
-        <%= image_tag pictures[0][3] %>
+        <% pictures[0].each do |pic| %>
+        <%= image_tag pic %>
+        <% end %>
       <a href="#" class="slidesjs-previous slidesjs-navigation"><i class="icon-chevron-left icon-large"></i></a>
       <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right icon-large"></i></a>
     </div>
+
+
       <div class="tweet_container">
         <h3>Tweets about the NBA:</h3>
         <div class="tweets">
