@@ -1,0 +1,43 @@
+<h1>Listing photos</h1>
+
+<table>
+  <tr>
+    <th>Text</th>
+    <th>Favorite count</th>
+    <th>From user name</th>
+    <th>Id str</th>
+    <th>Retweet count</th>
+    <th>Hashtags</th>
+    <th>Media</th>
+    <th>Urls</th>
+    <th>User mentions</th>
+    <th>Place</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @photos.each do |photo| %>
+  <tr>
+    <td><%= photo.text %></td>
+    <td><%= photo.favorite_count %></td>
+    <td><%= photo.from_user_name %></td>
+    <td><%= photo.id_str %></td>
+    <td><%= photo.retweet_count %></td>
+    <td><%= photo.hashtags %></td>
+    <td><%= photo.media %></td>
+    <td><%= photo.urls %></td>
+    <td><%= photo.user_mentions %></td>
+    <td><%= photo.place %></td>
+    <td><%= photo.user_id %></td>
+    <td><%= link_to 'Show', photo %></td>
+    <td><%= link_to 'Edit', edit_photo_path(photo) %></td>
+    <td><%= link_to 'Destroy', photo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Photo', new_photo_path %>

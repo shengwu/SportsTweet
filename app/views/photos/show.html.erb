@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Text:</b>
+  <%= @photo.text %>
+</p>
+
+<p>
+  <b>Favorite count:</b>
+  <%= @photo.favorite_count %>
+</p>
+
+<p>
+  <b>From user name:</b>
+  <%= @photo.from_user_name %>
+</p>
+
+<p>
+  <b>Id str:</b>
+  <%= @photo.id_str %>
+</p>
+
+<p>
+  <b>Retweet count:</b>
+  <%= @photo.retweet_count %>
+</p>
+
+<p>
+  <b>Hashtags:</b>
+  <%= @photo.hashtags %>
+</p>
+
+<p>
+  <b>Media:</b>
+  <%= @photo.media %>
+</p>
+
+<p>
+  <b>Urls:</b>
+  <%= @photo.urls %>
+</p>
+
+<p>
+  <b>User mentions:</b>
+  <%= @photo.user_mentions %>
+</p>
+
+<p>
+  <b>Place:</b>
+  <%= @photo.place %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @photo.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_photo_path(@photo) %> |
+<%= link_to 'Back', photos_path %>

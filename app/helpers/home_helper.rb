@@ -32,24 +32,18 @@ module HomeHelper
   def get_picture()
     picked_tweet_url=nil
     picked_tweet_text=nil
-    count=0
     favorites=-1
 
-    Tweet.all.entries.each do |tweet|
-        if tweet.media != [] and tweet.favorite_count > favorites
-            picked_tweet_url= tweet.media[0].media_url
-            picked_tweet_text = tweet.text
-            picked_tweet_text.slice! picked_tweet_url
-
-            favorites = tweet.favorite_count
+    Photo.all.entries.each do |photo|
+        if photo.favorite_count > favorites
+            picked_tweet_url= photo.media
+            picked_tweet_text = photo.text
+            favorites = photo.favorite_count
         end
 
-        if count == 10000
-            break
-        end
-        count+=1
     end
-    [picked_tweet_url,picked_tweet_text]
+    picked_tweet_text.slice! picked_tweet_url
+    [picked_tweet_url,picked_tweet_text,favorites]
   end
 
   def tweet_timeframe()

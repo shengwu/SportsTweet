@@ -15,10 +15,24 @@ end
 
 TweetStream::Client.new.track('nba') do |tweet|
   if (tweet.lang == "en" or tweet.lang == nil) 
-    puts tweet.text
-    puts tweet.user.id
-    if (Follower.exists? guid: tweet.user.id) #check if follower is a espn sportscenter follower
-      t = Tweet.create(:created_at => tweet.created_at,
+    puts tweet.media
+    # if (Follower.exists? guid: tweet.user.id) #check if follower is a espn sportscenter follower
+      if tweet.media != []
+        puts "hi"
+        t = Photo.create(:created_at => tweet.created_at,
+                       :favorite_count => tweet.favorite_count,
+                       :from_user_name => tweet.user.name,
+                       :hashtags => tweet.hashtags,
+                       :id_str => tweet.id.to_s,
+                       :media => tweet.media[0].media_url, 
+                       :place => tweet.place,
+                       :retweet_count => tweet.retweet_count,
+                       :text => tweet.text,
+                       :urls => tweet.urls,
+                       :user_mentions => tweet.user_mentions,
+                       :user_id => tweet.user.id)
+      else 
+        t = Tweet.create(:created_at => tweet.created_at,
                        :favorite_count => tweet.favorite_count,
                        :from_user_name => tweet.user.name,
                        :hashtags => tweet.hashtags,
@@ -30,6 +44,7 @@ TweetStream::Client.new.track('nba') do |tweet|
                        :urls => tweet.urls,
                        :user_mentions => tweet.user_mentions,
                        :user_id => tweet.user.id)
-    end
+      end
+    # end
   end
 end
