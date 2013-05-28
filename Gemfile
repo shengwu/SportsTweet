@@ -48,3 +48,5 @@ gem 'thin'
 gem 'whenever', :require => false
 
 #rackup faye.ru -s thin -E production
+
+gem 'obscenity'

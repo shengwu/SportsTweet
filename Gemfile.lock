@@ -84,6 +84,7 @@ GEM
     mime-types (1.22)
     multi_json (1.7.2)
     multipart-post (1.2.0)
+    obscenity (1.0.1)
     pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -161,6 +162,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   faye
   jquery-rails
+  obscenity
   pg
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)

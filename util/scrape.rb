@@ -16,7 +16,6 @@ end
 TweetStream::Client.new.track('nba') do |tweet|
   if (tweet.lang == "en") 
     # if (Follower.exists? guid: tweet.user.id) #check if follower is a espn sportscenter follower
-    puts tweet.media
       if tweet.media != []
         puts ""
         puts "photo"
@@ -28,7 +27,7 @@ TweetStream::Client.new.track('nba') do |tweet|
                        :media => tweet.media[0].media_url, 
                        :place => tweet.place,
                        :retweet_count => tweet.retweet_count,
-                       :text => tweet.text,
+                       :text => Obscenity.sanitize(tweet.text),
                        :urls => tweet.urls,
                        :user_mentions => tweet.user_mentions,
                        :user_id => tweet.user.id)
@@ -42,7 +41,7 @@ TweetStream::Client.new.track('nba') do |tweet|
                        :media => tweet.media, 
                        :place => tweet.place,
                        :retweet_count => tweet.retweet_count,
-                       :text => tweet.text,
+                       :text => Obscenity.sanitize(tweet.text),
                        :urls => tweet.urls,
                        :user_mentions => tweet.user_mentions,
                        :user_id => tweet.user.id)
