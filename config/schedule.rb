@@ -21,6 +21,7 @@
 
 every 15.minutes do
   runner "Tweet.destroy_all(created_at: 1.year.ago..1.hour.ago)"
+  runner "Photo.destroy_all(created_at: 1.year.ago..5.hours.ago)"
   # rake "my:rake:task"
   # command "/usr/bin/my_great_command"
 end
@@ -30,4 +31,4 @@ every 5.minutes do
 end
 
 #whenever --update-crontab store
-#^ update cron job
+#crontab -l

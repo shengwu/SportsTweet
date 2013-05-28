@@ -46,3 +46,5 @@ gem 'thin'
 
 #cron job
 gem 'whenever', :require => false
+
+#rackup faye.ru -s thin -E production

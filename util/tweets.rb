@@ -17,10 +17,11 @@ end
 
 uri = URI.parse("http://localhost:9292/faye")
 
-TweetStream::Client.new.track('nba') do |status|
-  if tweet.lang == "en" or tweet.lang == nil
-    puts "#{status.text}"
-    message = {'channel' => '/tweets', 'data' => status.text}
+TweetStream::Client.new.track('nba') do |tweet|
+  if tweet.lang == "en"
+    puts tweet.text
+    puts ""
+    message = {'channel' => '/tweets', 'data' => tweet.text}
     Net::HTTP.post_form(uri, :message => message.to_json);
   end
 end

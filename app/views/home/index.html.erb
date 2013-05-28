@@ -2,6 +2,10 @@
   <head>
     <title>SportsTweet</title>
     <%= javascript_include_tag "http://localhost:9292/faye.js" %>
+    <%= javascript_include_tag "jquery.slides.min.js" %>
+    <%= javascript_include_tag "example.js" %>
+    <%= stylesheet_link_tag "font-awesome.min.css" %>
+    <%= stylesheet_link_tag "example.css" %>
   </head>
   <body>
     <div class="container">
@@ -16,17 +20,27 @@
         <h3>Most mentioned teams:</h3>
         <svg class="chart"></svg>
       </div>
-      <div class="popular_picture">
+<!--       <div class="popular_picture">
         <h3> Trending Picture </h3>
           <% tweet = get_picture %>
           <img src= <%= tweet.first %> />
           <h4> <%= tweet.second %> </h4>
-      </div>
+      </div> -->
+      <% pictures = get_pictures %>
+      <div id="slides">
+        <%= image_tag pictures[0][0] %>
+        <%= image_tag pictures[0][1] %>
+        <%= image_tag pictures[0][2] %>
+        <%= image_tag pictures[0][3] %>
+      <a href="#" class="slidesjs-previous slidesjs-navigation"><i class="icon-chevron-left icon-large"></i></a>
+      <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right icon-large"></i></a>
+    </div>
       <div class="tweet_container">
         <h3>Tweets about the NBA:</h3>
         <div class="tweets">
         </div>
       </div>
+
 
 
     </div>

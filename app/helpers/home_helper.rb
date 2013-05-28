@@ -32,18 +32,25 @@ module HomeHelper
   def get_picture()
     picked_tweet_url=nil
     picked_tweet_text=nil
-    favorites=-1
+    photo = Photo.find(:all, :order => "favorite_count").last
+    url = photo.media
+    text = photo.text
+    [url,text,photo.favorite_count]
+  end
 
-    Photo.all.entries.each do |photo|
-        if photo.favorite_count > favorites
-            picked_tweet_url= photo.media
-            picked_tweet_text = photo.text
-            favorites = photo.favorite_count
-        end
-
+  def get_pictures()
+    url=[]
+    text=[]
+    iter = 0
+    count = Photo.count -1
+    photo_array = Photo.find(:all, :order => "favorite_count")[(count-4)...(count)]#get last four photo tweets
+    4.times do
+      photo = photo_array[iter]
+      url.append(photo.media)
+      text.append(photo.text)
+      iter += 1
     end
-    picked_tweet_text.slice! picked_tweet_url
-    [picked_tweet_url,picked_tweet_text,favorites]
+    [url,text]
   end
 
   def tweet_timeframe()
@@ -57,3 +64,5 @@ module HomeHelper
     Tweet.count
   end
 end
+
+
