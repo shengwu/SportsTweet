@@ -14,7 +14,7 @@ end
 first = Photo.first.id
 last = Photo.last.id
 (first..last).each do |id|
-	puts "id:"+id
+	puts "id:"+id.to_s
 	twitter_id = Photo.find_by_id(id).id_str
 	updated_tweet = Twitter.status(twitter_id)
 	Photo.update(id,:favorite_count => updated_tweet.favorite_count)
