@@ -11,13 +11,21 @@ Twitter.configure do |config|
 	config.oauth_token_secret = ENV['OAUTH_TOKEN_SECRET']
 	#config.auth_method        = :oauth
 end
-first = Photo.first.id
-last = Photo.last.id
-(first..last).each do |id|
-	puts "id:"+id.to_s
-	twitter_id = Photo.find_by_id(id).id_str
-	updated_tweet = Twitter.status(twitter_id)
+# first = Photo.first.id
+# last = Photo.last.id
+# (first..last).each do |id|
+# 	puts "id:"+id.to_s
+# 	twitter_id = Photo.find_by_id(id).id_str
+# 	updated_tweet = Twitter.status(twitter_id)
+# 	Photo.update(id,:favorite_count => updated_tweet.favorite_count)
+# 	# sleep 1.0/3.0
+# end
+counter=0
+Photo.all.each do |photo|
+	print "."
+	updated_tweet = Twitter.status(photo.id_str)
+	id = photo.id
 	Photo.update(id,:favorite_count => updated_tweet.favorite_count)
-	# sleep 1.0/3.0
+	counter+=1
 end
-puts "done updating "+(last-first).to_s+ " photo tweets"
+puts "done updating "+counter.to_s+ " photo tweets"
