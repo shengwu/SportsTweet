@@ -26,7 +26,7 @@ every 15.minutes do
 end
 
 every 5.minutes do
-	command "ruby /home/rc/SportsTweet/util/update_tweets.rb"
+	command "ruby /home/rc/SportsTweet/util/update_photos.rb"
 end
 
 #whenever --update-crontab store
