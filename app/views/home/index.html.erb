@@ -51,8 +51,8 @@
             colors = d3.scale.category20();
      
         var data = [
-            // <% top_words.each do |team, count| %>
             <% show_popular.each do |team, count| %>
+            /*% top_words.each do |team, count| %>*/
               {"label":"<%= team %>", "value": <%= count %>},
             <% end %>
         ];
