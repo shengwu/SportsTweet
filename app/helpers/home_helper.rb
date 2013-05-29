@@ -79,7 +79,14 @@ module HomeHelper
     end
     words_hash = words_hash.sort_by{|k,v| v}
     count = words_hash.count-1
-    words_hash[(count-15)..-1]
+    words_hash = words_hash[(count-15)..-1]
+    keys=[]
+    values=[]
+    words_hash.each do |entry|
+      keys.append(entry[0])
+      values.append(entry[1])
+    end
+    [keys,values]
   end 
 end
 
