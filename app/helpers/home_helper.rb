@@ -63,6 +63,20 @@ module HomeHelper
   def tweet_count()
     Tweet.count
   end
+
+  def top_words()
+    words_hash = Hash.new(0)
+    Tweet.all.each do |tweet|
+      word_array = tweet.text.split(/\W+/)
+      word_array.each do |word|
+        words_hash[word]+=1
+      end
+    end
+
+    words_hash = words_hash.sort_by{|k,v| v}
+    count = words_hash.count-1
+    words_hash[(count-10)..-1]
+  end
 end
 
 
