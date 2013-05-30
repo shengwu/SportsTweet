@@ -11,12 +11,17 @@ module HomeHelper
     # e.g. "Miami Heat", counts tweets containing "miami" or "heat"
     tweets.each do |tweet|
       teams.each do |team, count|
-        city, name = team.downcase.split
+        # Split name into city and team name
+        fragments = team.downcase.split
+        city = fragments[0..-2].join(' ')
+        name = fragments.last
         if tweet.downcase.include? city or tweet.downcase.include? name
           teams[team] += 1
         end
       end
     end
+
+    # Return the 10 most mentioned teams
     teams.sort_by{|_key, value| value}.reverse[0..9]
   end
 
