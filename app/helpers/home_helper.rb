@@ -2,43 +2,39 @@ require "uri"
 
 module HomeHelper
   def show_popular()
-    tweets = Tweet.select("text")
-    teams  = {"thunder" => 0,
-    "rockets" => 0,
-    "heat" => 0,
-    "bucks" => 0,
-    "clippers" => 0,
-    "grizzlies" => 0,
-    "nets" => 0,
-    "bulls" => 0,
-    "nuggets" => 0,
-    "warriors" => 0,
-    "pacers" => 0,
-    "hawks" => 0,
-    "spurs" => 0,
-    "lakers" => 0,
-    "knicks" => 0,
-    "celtics" => 0}
+    # Get all tweets and all team names
+    tweets = Tweet.select("text").map{|tweet| tweet.text}
+    team_names = Team.select("name").map{|team| team.name}
+    teams = Hash[*team_names.zip([0]*team_names.length).flatten]
+
+    # Counts mentions of NBA teams
+    # e.g. "Miami Heat", counts tweets containing "miami" or "heat"
     tweets.each do |tweet|
       teams.each do |team, count|
-        if tweet.text.downcase.include? team
+        # Split name into city and team name
+        fragments = team.downcase.split
+        city = fragments[0..-2].join(' ')
+        name = fragments.last
+        if tweet.downcase.include? city or tweet.downcase.include? name
           teams[team] += 1
         end
       end
     end
-    teams.sort_by{|_key, value| value}.reverse
+
+    # Return the 10 most mentioned teams
+    teams.sort_by{|_key, value| value}.reverse[0..9]
   end
 
   def get_pictures()
-    # Get four most favorited tweets
-    Photo.order("favorite_count DESC").limit(4)
+    # Get the six most favorited tweets with photos
+    Photo.order("favorite_count DESC").limit(6)
   end
 
   def elapsed_minutes()
     # Return age of oldest tweet in database
     oldest = Tweet.first.created_at
     seconds = Time.now - oldest
-    (seconds/60).round(1)
+    (seconds/60).round()
   end
 
   def num_tweets()
