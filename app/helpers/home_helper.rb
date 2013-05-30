@@ -34,14 +34,14 @@ module HomeHelper
     Photo.order("favorite_count DESC").limit(4)
   end
 
-  def tweet_timeframe()
+  def elapsed_minutes()
+    # Return age of oldest tweet in database
     oldest = Tweet.first.created_at
-    newest = Tweet.last.created_at
-    seconds = newest - oldest
-    (seconds/60).round(1)  #return number of minutes
+    seconds = Time.now - oldest
+    (seconds/60).round(1)
   end
 
-  def tweet_count()
+  def num_tweets()
     Tweet.count
   end
 

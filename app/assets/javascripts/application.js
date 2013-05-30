@@ -29,6 +29,13 @@ $(function() {
         width: 400,
         height: 400,
         pagination: false,
-        generatePagination: false
+        generatePagination: false,
+        play: {
+            auto: true,
+            interval: 2000,
+            swap: true,
+            pauseOnHover: true,
+            restartDelay: 1000
+        }
     });
 });
