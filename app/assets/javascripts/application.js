@@ -30,6 +30,12 @@ $(function() {
         }
     });
 
+    // Set image sizes
+    $('.slide img').each(function() {
+        var imgType = (this.width/this.height > 1) ? 'wide' : 'tall';
+        $(this).addClass(imgType);
+    });
+
     // Connect to a stream of tweets
     if (typeof Faye !== 'undefined') {
         var faye = new Faye.Client('http://localhost:9292/faye');
