@@ -25,6 +25,11 @@ module HomeHelper
     teams.sort_by{|_key, value| value}.reverse[0..9]
   end
 
+  def get_six_tweets()
+    # Return six tweets to prepopulate the streaming tweet area
+    Tweet.order("created_at DESC").limit(6)
+  end
+
   def get_pictures()
     # Get the six most favorited tweets with photos
     Photo.order("favorite_count DESC").limit(6)

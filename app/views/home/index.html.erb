@@ -10,7 +10,7 @@
       <div class="left-col">
         <img src="http://i.imgur.com/KCLVHYX.png" alt="" class="logo" />
         <div class="tweet-info">
-          <p>We show you the hottest topics about professional basketball on Twitter. Using <%= num_tweets %> tweets from the past <%= elapsed_minutes %> minutes.</p>
+          <p>We show you the hottest topics in professional basketball on Twitter. Using <%= num_tweets %> tweets from the past <%= elapsed_minutes %> minutes.</p>
           <p>Created by:<br> Rich Chang (<a href="http://twitter.com/richhchang" target="_blank_">@richhchang</a>),<br> Donald Leonard (<a href="http://twitter.com/Mr_2FirstNames" target="_blank_">@Mr_2FirstNames</a>), <br>and Sheng Wu (<a href="http://twitter.com/shenghis" target="_blank_">@shenghis</a>).</p>
         </div>
       </div>
@@ -31,6 +31,9 @@
       <div class="tweet_container">
         <h3>Tweets about the NBA:</h3>
         <div class="tweets">
+          <% get_six_tweets.each do |tweet| %>
+            <div class="tweet"><%= tweet.text %></div>
+          <% end %>
         </div>
       </div>
     </div>
