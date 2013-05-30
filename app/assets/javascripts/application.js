@@ -31,23 +31,36 @@ $(function() {
     });
 
     // Set image sizes
-    $('.slide img').each(function() {
+    $('.slide img').load(function() {
         var imgType = (this.width/this.height > 1) ? 'wide' : 'tall';
         $(this).addClass(imgType);
     });
 
+    // Increment minute display each minute
+    var incrementMinutes = function() {
+        var minuteCounter = $('.elapsed_minutes');
+        minuteCounter.text(parseInt(minuteCounter.text()) + 1);
+        window.setTimeout(incrementMinutes, 60000);
+    };
+    window.setTimeout(incrementMinutes, 60000);
+
     // Connect to a stream of tweets
+    var addIncomingTweet = function(data) {
+        var elem = '<div class="tweet" style="display: none;">' + data + '</div>';
+        $('.tweets').prepend(elem);
+        var tweets = $('.tweet');
+        tweets.slideDown();
+        if (tweets.length > 6) {
+            $(tweets[tweets.length-1]).remove();
+        }
+
+        // Increment counter
+        var tweetCounter = $('.num_tweets');
+        tweetCounter.text(parseInt(tweetCounter.text()) + 1);
+    };
     if (typeof Faye !== 'undefined') {
         var faye = new Faye.Client('http://localhost:9292/faye');
-        faye.subscribe('/tweets', function(data) {
-            var elem = '<div class="tweet" style="display: none;">' + data + '</div>';
-            $('.tweets').prepend(elem);
-            var tweets = $('.tweet');
-            tweets.slideDown();
-            if (tweets.length > 6) {
-                $(tweets[tweets.length-1]).remove();
-            }
-        });
+        faye.subscribe('/tweets', addIncomingTweet);
     } else {
         $('.tweets').prepend("<p>A connection could not be established with the server that handles streaming tweets.</p>");
     }
