@@ -37,7 +37,7 @@ module HomeHelper
 
   def elapsed_minutes()
     # Return age of oldest tweet in database
-    oldest = Tweet.first.created_at
+    oldest = Tweet.order("created_at").limit(1)[0].created_at
     seconds = Time.now - oldest
     (seconds/60).round()
   end
