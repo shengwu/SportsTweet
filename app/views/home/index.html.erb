@@ -57,15 +57,12 @@
             <% end %>
         ];
         var values = data.map(function(d, i) { return d.value; });
+        var barHeight = h / data.length;
 
         var x = d3.scale.linear()
                   .domain([0, d3.max(values)])
                   .range([0, w]);
      
-        var y = d3.scale.ordinal()
-                  .domain(values)
-                  .rangeBands([0, h]);
-
         var chart = d3.select(".chart")
                       .attr("width", w)
                       .attr("height", h);
@@ -73,16 +70,16 @@
         chart.selectAll("rect")
              .data(values)
              .enter().append("rect")
-             .attr("y", y)
+             .attr("y", function(d, i) { return i*barHeight; })
              .attr("width", x)
-             .attr("height", y.rangeBand())
+             .attr("height", barHeight)
              .style("fill", function(d, i) { return colors(i); });
 
         chart.selectAll("text")
              .data(values)
              .enter().append("text")
              .attr("x", 10)
-             .attr("y", function(d) { return y(d) + y.rangeBand() / 2; })
+             .attr("y", function(d, i) { return (i+0.5)*barHeight; })
              .attr("dx", -3)
              .attr("dy", ".35em")
              //.attr("text-anchor", "end")
