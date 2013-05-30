@@ -3,14 +3,12 @@
     <title>SportsTweet</title>
     <%= javascript_include_tag "http://localhost:9292/faye.js" %>
     <%= javascript_include_tag "jquery.slides.min.js" %>
-    <%= javascript_include_tag "example.js" %>
-
   </head>
   <body>
     <div class="container">
       <h1>SportsTweet</h1>
       <!--<p>Link to saved tweets: <%= link_to "Saved tweets", tweets_path %></p>-->
-      <div class = "tweet_timeframe">
+      <div class="tweet_timeframe">
         <% elapsed_minutes = tweet_timeframe %>
         <% num_tweets = tweet_count %>
         <p> <%= num_tweets %> tweets from the past <%= elapsed_minutes %> minutes </p>
@@ -19,32 +17,38 @@
         <h3>Most mentioned teams:</h3>
         <svg class="chart"></svg>
       </div>
-<!--       <div class="popular_picture">
-        <h3> Trending Picture </h3>
-          <% tweet = get_picture %>
-          <img src= <%= tweet.first %> />
-          <h4> <%= tweet.second %> </h4>
-      </div> -->
-      <% pictures = get_pictures %>
       <div id="slides">
-        <% pictures[0].each do |pic| %>
-        <%= image_tag pic %>
+        <% get_pictures.each do |pic| %>
+          <div class="slide">
+            <%= image_tag pic.media %>
+            <div class="caption">
+              <%= pic.text %>
+            </div>
+          </div>
         <% end %>
+    </div>
       <a href="#" class="slidesjs-previous slidesjs-navigation"><i class="icon-chevron-left icon-large"></i></a>
       <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right icon-large"></i></a>
-    </div>
-
-
       <div class="tweet_container">
         <h3>Tweets about the NBA:</h3>
         <div class="tweets">
         </div>
       </div>
-
-
-
     </div>
     <script type="text/javascript">
+        // Function for using format strings
+        if (!String.prototype.format) {
+          String.prototype.format = function() {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function(match, number) { 
+              return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+              ;
+            });
+          };
+        }
+
         // Set up initial bar graph
         var w = 400,
             h = 400,
@@ -82,8 +86,10 @@
              .attr("y", function(d, i) { return (i+0.5)*barHeight; })
              .attr("dx", -3)
              .attr("dy", ".35em")
-             //.attr("text-anchor", "end")
-             .text(function(d, i) { return data[i].label + " (" + d + " mentions)"; });
+             .attr("class", function(d, i) { return data[i].label; })
+             .text(function(d, i) { 
+                 return "{0} ({1} mentions)".format(data[i].label, d); 
+             });
 
     </script>
   </body>

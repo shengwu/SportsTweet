@@ -29,28 +29,9 @@ module HomeHelper
     teams.sort_by{|_key, value| value}.reverse
   end
 
-  def get_picture()
-    picked_tweet_url=nil
-    picked_tweet_text=nil
-    photo = Photo.find(:all, :order => "favorite_count").last
-    url = photo.media
-    text = photo.text
-    [url,text,photo.favorite_count]
-  end
-
   def get_pictures()
-    url=[]
-    text=[]
-    iter = 0
-    count = Photo.count -1
-    photo_array = Photo.find(:all, :order => "favorite_count")[(count-4)...(count)]#get last four photo tweets
-    4.times do
-      photo = photo_array[iter]
-      url.append(photo.media)
-      text.append(photo.text)
-      iter += 1
-    end
-    [url,text]
+    # Get four most favorited tweets
+    Photo.order("favorite_count DESC").limit(4)
   end
 
   def tweet_timeframe()
