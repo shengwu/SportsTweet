@@ -19,8 +19,8 @@ a {
 
 .container {
     margin: 0 auto;
-    max-width: 1060px;
-    padding: 20px 50px;
+    max-width: 1120px;
+    padding: 20px;
     color: white;
 }
 
@@ -31,12 +31,15 @@ a {
 }
 .left-col {
     padding: 0 10px;
-    width: 200px;
+    width: 260px;
     text-align: center;
     vertical-align: top;
 }
+.left-col p + p {
+    margin-top: 10px;
+}
 .logo {
-    width: 160px;
+    width: 230px;
 }
 .chart {
     margin-top: 10px;

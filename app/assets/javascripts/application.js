@@ -15,16 +15,7 @@
 //= require_tree .
 
 $(function() {
-    var faye = new Faye.Client('http://localhost:9292/faye');
-    faye.subscribe('/tweets', function(data) {
-        var elem = '<div class="tweet" style="display: none;">' + data + '</div>';
-        $('.tweets').prepend(elem);
-        var tweets = $('.tweet');
-        tweets.slideDown();
-        if (tweets.length > 6) {
-            $(tweets[tweets.length-1]).remove();
-        }
-    });
+    // Start slideshow
     $('#slides').slidesjs({
         width: 400,
         height: 400,
@@ -38,4 +29,20 @@ $(function() {
             restartDelay: 1000
         }
     });
+
+    // Connect to a stream of tweets
+    if (typeof Faye !== 'undefined') {
+        var faye = new Faye.Client('http://localhost:9292/faye');
+        faye.subscribe('/tweets', function(data) {
+            var elem = '<div class="tweet" style="display: none;">' + data + '</div>';
+            $('.tweets').prepend(elem);
+            var tweets = $('.tweet');
+            tweets.slideDown();
+            if (tweets.length > 6) {
+                $(tweets[tweets.length-1]).remove();
+            }
+        });
+    } else {
+        $('.tweets').prepend("<p>A connection could not be established with the server that handles streaming tweets.</p>");
+    }
 });
