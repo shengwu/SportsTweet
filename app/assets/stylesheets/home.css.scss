@@ -77,11 +77,13 @@ td {
 }
 .slidesjs-slide {
     height: 100%;
+    text-align: center;
 }
-.slidesjs-slide img {
+.slidesjs-slide img.wide {
     width: 100%;
-    max-width: 100%;
-    max-height: 90%;
+}
+.slidesjs-slide img.tall {
+    height: 100%;
 }
 .caption {
     position: absolute;

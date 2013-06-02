@@ -14,7 +14,7 @@ TweetStream.configure do |config|
 end
 
 TweetStream::Client.new.track('nba') do |tweet|
-  if (tweet.lang == "en") 
+  if tweet.lang == "en"
     # if (Follower.exists? guid: tweet.user.id) #check if follower is a espn sportscenter follower
       if tweet.media != []
         print "X"
