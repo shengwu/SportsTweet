@@ -22,10 +22,11 @@ end
 # end
 counter=0
 Photo.all.each do |photo|
-	print "."
 	updated_tweet = Twitter.status(photo.id_str)
-	id = photo.id
-	Photo.update(id,:favorite_count => updated_tweet.favorite_count)
+	print updated_tweet.favorite_count
+	print " "
+	item = Photo.find(:first, :conditions => [ "id_str = ?", photo.id_str])
+	item.update_attributes(:favorite_count => updated_tweet.favorite_count)
 	counter+=1
 end
 puts "done updating "+counter.to_s+ " photo tweets"
