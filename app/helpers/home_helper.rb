@@ -1,7 +1,7 @@
 require "uri"
 
 module HomeHelper
-  def show_popular()
+  def show_popular_teams()
     # Get all tweets and all team names
     tweets = Tweet.select("text").map{|tweet| tweet.text}
     team_names = Team.select("name").map{|team| team.name}
