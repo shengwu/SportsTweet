@@ -32,6 +32,35 @@ class PlayersController < ApplicationController
     end
   end
 
+  # GET /players/on_team/Boston%20Celtics
+  # GET /players/on_team/Boston%20Celtics.json
+  # Return a list of players and no. of times each is mentioned
+  def on_team
+    tweets = Tweet.select("text").map{|tweet| tweet.text}
+    players = Player.where("team_name = ?", params[:team_name]).select("name").map{|player| player.name}
+    counts = Hash[*players.zip([0]*players.length).flatten]
+
+    tweets.each do |tweet|
+      players.each do |name, count|
+        # Split name into first name and last name
+        fragments = name.downcase.split
+        first = fragments[0..-2].join(' ')
+        last = fragments.last
+        full = name.downcase
+        print full
+        #if (tweet.downcase.include? first and tweet.downcase.include? last) or tweet.downcase.include? full
+        if (tweet.downcase.include? first and tweet.downcase.include? last) or tweet.downcase.include? full
+          counts[name] += 1
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.html # on_team.html.erb
+      format.json { render json: counts.sort_by{|_key, value|}.reverse[0..7] }
+    end
+  end
+
   # GET /players/1/edit
   def edit
     @player = Player.find(params[:id])

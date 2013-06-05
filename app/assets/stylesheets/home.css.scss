@@ -43,13 +43,13 @@ a {
 }
 .chart {
     margin-top: 10px;
+    background-color: #222;
 }
 .chart text {
     fill: white;
 }
-
-.chart2 text {
-    fill: white;
+.teams text {
+    cursor: pointer;
 }
 
 .tweet_container {

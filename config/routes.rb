@@ -10,6 +10,9 @@ SportsTweet::Application.routes.draw do
   root :to => "home#index"
   get "home/index"
 
+  # For getting a list of players by no. of mentions
+  match 'players/on_team/:team_name' => 'players#on_team'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
