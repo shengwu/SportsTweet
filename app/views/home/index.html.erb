@@ -7,6 +7,8 @@
   </head>
   <body>
     <div class="container">
+
+      <!--INTRODUCTION -->
       <div class="left-col">
         <img src="http://i.imgur.com/KCLVHYX.png" alt="" class="logo" />
         <div class="tweet-info">
@@ -14,6 +16,8 @@
           <p>Created by:<br> Rich Chang (<a href="http://twitter.com/richhchang" target="_blank_">@richhchang</a>),<br> Donald Leonard (<a href="http://twitter.com/Mr_2FirstNames" target="_blank_">@Mr_2FirstNames</a>), <br>and Sheng Wu (<a href="http://twitter.com/shenghis" target="_blank_">@shenghis</a>).</p>
         </div>
       </div>
+
+      <!-- PICTURES -->
       <div id="slides">
         <% get_pictures.each do |pic| %>
           <div class="slide">
@@ -24,10 +28,21 @@
           </div>
         <% end %>
       </div>
+
+      <!-- TEAM CHART -->
       <div class="popular">
         <h3>Most mentioned teams:</h3>
         <svg class="chart"></svg>
       </div>
+
+      <!-- PLAYER CHART -->
+      <div class="popular">
+        <h3>Most mentioned players:</h3>
+        <svg class="chart2"></svg>
+      </div>
+
+
+      <!-- TWEET STREAMING -->
       <div class="tweet_container">
         <h3>Tweets about the NBA:</h3>
         <div class="tweets">
@@ -37,6 +52,9 @@
         </div>
       </div>
     </div>
+
+
+    <!--TEAM JAVASCRIPT -->
     <script type="text/javascript">
         // Function for using format strings
         if (!String.prototype.format) {
@@ -57,8 +75,7 @@
             colors = d3.scale.category20();
      
         var data = [
-            <% show_popular.each do |team, count| %>
-            /*% top_words.each do |team, count| %>*/
+            <% show_popular_teams.each do |team, count| %>
               {"label":"<%= team %>", "value": <%= count %>},
             <% end %>
         ];
@@ -71,7 +88,66 @@
      
         var chart = d3.select(".chart")
                       .attr("width", w)
-                      .attr("height", h);
+                      .attr("height", h)
+
+        chart.selectAll("rect")
+             .data(values)
+             .enter().append("rect")
+             .attr("y", function(d, i) { return i*barHeight; })
+             .attr("width", x)
+             .attr("height", barHeight)
+             .style("fill", function(d, i) { return colors(i); });
+
+        chart.selectAll("text")
+             .data(values)
+             .enter().append("text")
+             .attr("x", 10)
+             .attr("y", function(d, i) { return (i+0.5)*barHeight; })
+             .attr("dx", -3)
+             .attr("dy", ".35em")
+             .attr("class", function(d, i) { return data[i].label; })
+             .text(function(d, i) { 
+                 return "{0} ({1} mentions)".format(data[i].label, d); 
+             });
+
+    </script>
+
+    <!--PLAYER JAVASCRIPT -->
+    <script type="text/javascript">
+        // Function for using format strings
+        if (!String.prototype.format) {
+          String.prototype.format = function() {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function(match, number) { 
+              return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+              ;
+            });
+          };
+        }
+
+        // Set up initial bar graph
+        var w = 400,
+            h = 400,
+            colors = d3.scale.category20c();
+     
+        var data = [
+            <% show_popular_players.each do |team, count| %>
+              {"label":"<%= team %>", "value": <%= count %>},
+            <% end %>
+        ];
+        var values = data.map(function(d, i) { return d.value; });
+        var barHeight = h / data.length;
+
+        var x = d3.scale.linear()
+                  .domain([0, d3.max(values)])
+                  .range([0, w]);
+     
+        var chart = d3.select(".chart2")
+                      .attr("width", w)
+                      .attr("height", h)
+                      .append("g");
 
         chart.selectAll("rect")
              .data(values)
