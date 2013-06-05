@@ -31,7 +31,7 @@
 
       <!-- TEAM CHART -->
       <div class="popular slide">
-        <h3>Most mentioned teams:</h3>
+        <h3 class="bar-reset">Most mentioned <span class="mention-label">teams</span>:</h3>
         <svg class="chart teams" id="chart"></svg>
       </div>
 
@@ -160,8 +160,11 @@
                      return "{0} ({1} mentions)".format(player_data[i].label, d); 
                  });
 
+            // Update metadata
             $('#chart').removeClass('teams');
             $('#chart').addClass('players');
+            var team_chunks = team.split(' ');
+            $('.mention-label').text('players on the {0}'.format(team_chunks[team_chunks.length-1]));
         });
     });
 
