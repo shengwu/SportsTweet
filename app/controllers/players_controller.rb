@@ -47,7 +47,6 @@ class PlayersController < ApplicationController
         first = fragments[0..-2].join(' ')
         last = fragments.last
         full = name.downcase
-        print full
         #if (tweet.downcase.include? first and tweet.downcase.include? last) or tweet.downcase.include? full
         if (tweet.downcase.include? first and tweet.downcase.include? last) or tweet.downcase.include? full
           counts[name] += 1

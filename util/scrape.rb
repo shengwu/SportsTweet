@@ -28,6 +28,7 @@ TweetStream::Client.new.track('nba') do |tweet|
                          :place => tweet.place,
                          :retweet_count => tweet.retweet_count,
                          :text => tweet.text,
+                         :screen_name => tweet.user.screen_name,
                          :urls => tweet.urls,
                          :user_mentions => tweet.user_mentions,
                          :user_id => tweet.user.id)
@@ -43,6 +44,7 @@ TweetStream::Client.new.track('nba') do |tweet|
                      :place => tweet.place,
                      :retweet_count => tweet.retweet_count,
                      :text => Obscenity.sanitize(tweet.text),
+                     :screen_name => tweet.user.screen_name,
                      :urls => tweet.urls,
                      :user_mentions => tweet.user_mentions,
                      :user_id => tweet.user.id)

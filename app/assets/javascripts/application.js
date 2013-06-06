@@ -14,6 +14,19 @@
 //= require jquery_ujs
 //= require_tree .
 
+// Function for using format strings
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
 $(function() {
     // Start slideshow
     $('#slides').slidesjs({
@@ -46,11 +59,11 @@ $(function() {
 
     // Connect to a stream of tweets
     var addIncomingTweet = function(data) {
-        var elem = '<div class="tweet" style="display: none;">' + data + '</div>';
+        var elem = '<div class="tweet" style="display: none;">{0} &mdash; <a class="author" href="http://twitter.com/account/redirect_by_id?id={1}" target="_blank">@{2}</a></div>'.format(data.text, data.user_id, data.screen_name);
         $('.tweets').prepend(elem);
         var tweets = $('.tweet');
         tweets.slideDown();
-        if (tweets.length > 6) {
+        if (tweets.length > 12) {
             $(tweets[tweets.length-1]).remove();
         }
 

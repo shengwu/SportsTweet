@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528035029) do
+ActiveRecord::Schema.define(:version => 20130606134411) do
 
   create_table "followers", :force => true do |t|
     t.integer  "guid"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20130528035029) do
     t.text     "place"
     t.datetime "updated_at",     :null => false
     t.integer  "user_id"
+    t.string   "screen_name"
   end
 
 end

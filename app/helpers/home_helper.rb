@@ -90,9 +90,9 @@ module HomeHelper
     players.sort_by{|_key, value| value}.reverse[0..9]
   end
 
-  def get_six_tweets()
-    # Return six tweets to prepopulate the streaming tweet area
-    Tweet.order("created_at DESC").limit(6)
+  def get_twelve_tweets()
+    # Return twelve tweets to prepopulate the streaming tweet area
+    Tweet.order("created_at DESC").limit(12)
   end
 
   def get_pictures()

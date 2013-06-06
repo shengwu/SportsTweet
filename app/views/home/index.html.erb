@@ -39,8 +39,8 @@
       <div class="tweet_container">
         <h3>Tweets about the NBA:</h3>
         <div class="tweets">
-          <% get_six_tweets.each do |tweet| %>
-            <div class="tweet"><%= tweet.text %></div>
+          <% get_twelve_tweets.each do |tweet| %>
+            <div class="tweet"><%= tweet.text %> &mdash; <a class="author" href="http://twitter.com/account/redirect_by_id?id=<%= tweet.user_id %>" target="_blank">@<%= tweet.screen_name %></a></div>
           <% end %>
         </div>
       </div>
@@ -49,18 +49,6 @@
 
     <!--TEAM JAVASCRIPT -->
     <script type="text/javascript">
-        // Function for using format strings
-        if (!String.prototype.format) {
-          String.prototype.format = function() {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function(match, number) { 
-              return typeof args[number] != 'undefined'
-                ? args[number]
-                : match
-              ;
-            });
-          };
-        }
 
         // Set up initial bar graph
         var w = 400,

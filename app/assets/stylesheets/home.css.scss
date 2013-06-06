@@ -51,6 +51,9 @@ a {
 .teams text {
     cursor: pointer;
 }
+.teams text:hover {
+    text-decoration: underline;
+}
 
 .tweet_container {
     clear: both;

@@ -21,7 +21,14 @@ TweetStream::Client.new.track('nba') do |tweet|
   if tweet.lang == "en"
     puts tweet.text
     puts ""
-    message = {'channel' => '/tweets', 'data' => Obscenity.sanitize(tweet.text)}
+    message = {
+      'channel' => '/tweets', 
+      'data' => {
+        'text' => Obscenity.sanitize(tweet.text),
+        'user_id' => tweet.user.id, 
+        'screen_name' => tweet.user.screen_name
+      }
+    }
     Net::HTTP.post_form(uri, :message => message.to_json);
   end
 end
