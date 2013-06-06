@@ -14,13 +14,12 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
-
 uri = URI.parse("http://localhost:9292/faye")
 
 TweetStream::Client.new.track('nba') do |tweet|
+  # Only accept English language tweets
   if tweet.lang == "en"
-    puts tweet.text
-    puts ""
+    # Post tweet to the message handler
     message = {
       'channel' => '/tweets', 
       'data' => {
@@ -30,21 +29,39 @@ TweetStream::Client.new.track('nba') do |tweet|
       }
     }
     Net::HTTP.post_form(uri, :message => message.to_json);
+
+    # Save tweet to the database
+    if tweet.media != []
+      if Obscenity.profane?(tweet.text) == false
+        print "X"
+        t = Photo.create(:created_at => tweet.created_at,
+                       :favorite_count => tweet.favorite_count,
+                       :from_user_name => tweet.user.name,
+                       :hashtags => tweet.hashtags,
+                       :id_str => tweet.id.to_s,
+                       :media => tweet.media[0].media_url, 
+                       :place => tweet.place,
+                       :retweet_count => tweet.retweet_count,
+                       :text => tweet.text,
+                       :screen_name => tweet.user.screen_name,
+                       :urls => tweet.urls,
+                       :user_mentions => tweet.user_mentions,
+                       :user_id => tweet.user.id)
+      end
+    end
+    print "."
+    t = Tweet.create(:created_at => tweet.created_at,
+                   :favorite_count => tweet.favorite_count,
+                   :from_user_name => tweet.user.name,
+                   :hashtags => tweet.hashtags,
+                   :id_str => tweet.id.to_s,
+                   :media => tweet.media, 
+                   :place => tweet.place,
+                   :retweet_count => tweet.retweet_count,
+                   :text => Obscenity.sanitize(tweet.text),
+                   :screen_name => tweet.user.screen_name,
+                   :urls => tweet.urls,
+                   :user_mentions => tweet.user_mentions,
+                   :user_id => tweet.user.id)
   end
 end
-
-# count=0
-# array_of_followers=Array.new(5000)
-# Follower.all.entries.each do |follower|
-#   array_of_followers.append(follower.guid)
-#   count+=1
-#   puts count
-# 	if count == 4999
-# 		break
-# 	end
-# end
-# TweetStream::Client.new.follow(array_of_followers) do |status|
-#   puts "#{status.text}"
-#   message = {'channel' => '/tweets', 'data' => status.text}
-#   Net::HTTP.post_form(uri, :message => message.to_json);
-# end
