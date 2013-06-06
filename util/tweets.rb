@@ -17,8 +17,8 @@ end
 
 uri = URI.parse(ENV['FAYE_SERVER'])
 
-# Quit script after five minutes
-Timeout::timeout(300) {
+# Quit script after ten minutes
+Timeout::timeout(600) {
 TweetStream::Client.new.track('nba') do |tweet|
   # Only accept English language tweets
   if tweet.lang == "en"
