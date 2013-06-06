@@ -14,7 +14,11 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
-uri = URI.parse(ENV['FAYE_SERVER'])
+if ENV.has_key?("FAYE_SERVER")
+  uri = URI.parse(ENV['FAYE_SERVER'])
+else
+  uri = URI.parse("http://sportstweet-faye.herokuapp.com/faye")
+end
 
 TweetStream::Client.new.track('nba') do |tweet|
   # Only accept English language tweets
