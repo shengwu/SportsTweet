@@ -67,17 +67,35 @@
         // function to draw a bar graph
         // data is a list of {"label": ..., "value": ...} pairs
         var drawGraph = function(chart, data) {
-            // Remove any old information
-            chart.selectAll("rect")
-                 .remove();
-            chart.selectAll("text")
-                 .remove();
-
             var values = data.map(function(d, i) { return d.value; });
             var barHeight = h / data.length;
             var x = d3.scale.linear()
                       .domain([0, d3.max(values)])
                       .range([0, w]);
+
+            // If we're drawing something with same number of bars,
+            // we can use transitions
+            if (data.length == chart.selectAll("rect")[0].length) {
+                chart.selectAll("rect")
+                     .data(values)
+                     .transition()
+                     .attr("width", x);
+
+                chart.selectAll("text")
+                     .data(values)
+                     .transition()
+                     .text(function(d, i) { 
+                         return "{0} ({1} mentions)".format(data[i].label, d); 
+                     });
+                return;
+            }
+
+            // Otherwise, remove any old information
+            // and redraw the chart
+            chart.selectAll("rect")
+                 .remove();
+            chart.selectAll("text")
+                 .remove();
 
             chart.selectAll("rect")
                  .data(values)

@@ -47,7 +47,6 @@ class PlayersController < ApplicationController
         first = fragments[0..-2].join(' ')
         last = fragments.last
         full = name.downcase
-        #if (tweet.downcase.include? first and tweet.downcase.include? last) or tweet.downcase.include? full
         if (tweet.downcase.include? first and tweet.downcase.include? last) or tweet.downcase.include? full
           counts[name] += 1
         end
@@ -56,7 +55,7 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.html # on_team.html.erb
-      format.json { render json: counts.sort_by{|_key, value|}.reverse[0..7] }
+      format.json { render json: counts.sort_by{|_key, value|}.reverse[0..9] }
     end
   end
 
