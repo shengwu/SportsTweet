@@ -60,36 +60,47 @@
               {"label":"<%= team %>", "value": <%= count %>},
             <% end %>
         ];
-        var values = data.map(function(d, i) { return d.value; });
-        var barHeight = h / data.length;
-
-        var x = d3.scale.linear()
-                  .domain([0, d3.max(values)])
-                  .range([0, w]);
-     
         var chart = d3.select("#chart")
                       .attr("width", w)
                       .attr("height", h)
 
-        chart.selectAll("rect")
-             .data(values)
-             .enter().append("rect")
-             .attr("y", function(d, i) { return i*barHeight; })
-             .attr("width", x)
-             .attr("height", barHeight)
-             .style("fill", function(d, i) { return colors(i); });
+        // function to draw a bar graph
+        // data is a list of {"label": ..., "value": ...} pairs
+        var drawGraph = function(chart, data) {
+            // Remove any old information
+            chart.selectAll("rect")
+                 .remove();
+            chart.selectAll("text")
+                 .remove();
 
-        chart.selectAll("text")
-             .data(values)
-             .enter().append("text")
-             .attr("x", 10)
-             .attr("y", function(d, i) { return (i+0.5)*barHeight; })
-             .attr("dx", -3)
-             .attr("dy", ".35em")
-             .attr("class", function(d, i) { return data[i].label; })
-             .text(function(d, i) { 
-                 return "{0} ({1} mentions)".format(data[i].label, d); 
-             });
+            var values = data.map(function(d, i) { return d.value; });
+            var barHeight = h / data.length;
+            var x = d3.scale.linear()
+                      .domain([0, d3.max(values)])
+                      .range([0, w]);
+
+            chart.selectAll("rect")
+                 .data(values)
+                 .enter().append("rect")
+                 .attr("y", function(d, i) { return i*barHeight; })
+                 .attr("width", x)
+                 .attr("height", barHeight)
+                 .style("fill", function(d, i) { return colors(i); });
+
+            chart.selectAll("text")
+                 .data(values)
+                 .enter().append("text")
+                 .attr("x", 10)
+                 .attr("y", function(d, i) { return (i+0.5)*barHeight; })
+                 .attr("dx", -3)
+                 .attr("dy", ".35em")
+                 .attr("class", function(d, i) { return data[i].label; })
+                 .text(function(d, i) { 
+                     return "{0} ({1} mentions)".format(data[i].label, d); 
+                 });
+        }
+
+        drawGraph(chart, data);
 
     // Compare function for sorting an array of
     // [{"label": "some_name", "value": 23}] values by descending count
@@ -112,41 +123,7 @@
             }).sort(data_compare);
 
             // Redraw chart
-            var player_values = player_data.map(function(d, i) { return d.value; });
-            var barHeight = h / player_data.length;
-            var x = d3.scale.linear()
-                      .domain([0, d3.max(player_values)])
-                      .range([0, w]);
-
-            console.log(player_data);
-            console.log(player_values);
-
-            // Remove old chart
-            // We will want to add animations with transition() in the future
-            chart.selectAll("rect")
-                 .remove();
-            chart.selectAll("text")
-                 .remove();
-
-            // Draw new chart
-            chart.selectAll("rect")
-                 .data(player_values)
-                 .enter().append("rect")
-                 .attr("y", function(d, i) { return i*barHeight; })
-                 .attr("width", x)
-                 .attr("height", barHeight)
-                 .style("fill", function(d, i) { return colors(i); });
-            chart.selectAll("text")
-                 .data(player_values)
-                 .enter().append("text")
-                 .attr("x", 10)
-                 .attr("y", function(d, i) { return (i+0.5)*barHeight; })
-                 .attr("dx", -3)
-                 .attr("dy", ".35em")
-                 .attr("class", function(d, i) { return player_data[i].label; })
-                 .text(function(d, i) { 
-                     return "{0} ({1} mentions)".format(player_data[i].label, d); 
-                 });
+            drawGraph(chart, player_data);
 
             // Update metadata
             $('#chart').removeClass('teams');
