@@ -5,6 +5,7 @@ require 'tweetstream'
 require 'net/http'
 require 'uri'
 require 'json'
+require 'timeout'
 
 TweetStream.configure do |config|
   config.consumer_key       = ENV['CONSUMER_KEY']
@@ -16,6 +17,8 @@ end
 
 uri = URI.parse(ENV['FAYE_SERVER'])
 
+# Quit script after five minutes
+Timeout::timeout(300) {
 TweetStream::Client.new.track('nba') do |tweet|
   # Only accept English language tweets
   if tweet.lang == "en"
@@ -65,3 +68,4 @@ TweetStream::Client.new.track('nba') do |tweet|
                    :user_id => tweet.user.id)
   end
 end
+}
