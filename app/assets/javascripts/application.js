@@ -71,10 +71,4 @@ $(function() {
         var tweetCounter = $('.num_tweets');
         tweetCounter.text(parseInt(tweetCounter.text()) + 1);
     };
-    if (typeof Faye !== 'undefined') {
-        var faye = new Faye.Client('http://localhost:9292/faye');
-        faye.subscribe('/tweets', addIncomingTweet);
-    } else {
-        $('.tweets').prepend("<p>A connection could not be established with the server that handles streaming tweets.</p>");
-    }
 });

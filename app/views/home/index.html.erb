@@ -2,7 +2,7 @@
   <head>
     <title>SportsTweet</title>
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-    <%= javascript_include_tag "http://localhost:9292/faye.js" %>
+    <script type="text/javascript" src="<%= @faye_server %>.js"></script>
     <%= javascript_include_tag "jquery.slides.min.js" %>
   </head>
   <body>
@@ -132,6 +132,14 @@
             $('.mention-label').text('players on the {0}'.format(team_chunks[team_chunks.length-1]));
         });
     });
+
+    // Connect to Faye message server
+    if (typeof Faye !== 'undefined') {
+        var faye = new Faye.Client('<%= @faye_server %>');
+        faye.subscribe('/tweets', addIncomingTweet);
+    } else {
+        $('.tweets').prepend("<p>A connection could not be established with the server that handles streaming tweets.</p>");
+    }
 
     </script>
   </body>

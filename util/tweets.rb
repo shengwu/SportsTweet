@@ -14,7 +14,7 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
-uri = URI.parse("http://localhost:9292/faye")
+uri = URI.parse(ENV['FAYE_SERVER'])
 
 TweetStream::Client.new.track('nba') do |tweet|
   # Only accept English language tweets
