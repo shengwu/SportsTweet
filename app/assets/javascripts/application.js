@@ -56,19 +56,4 @@ $(function() {
         window.setTimeout(incrementMinutes, 60000);
     };
     window.setTimeout(incrementMinutes, 60000);
-
-    // Connect to a stream of tweets
-    var addIncomingTweet = function(data) {
-        var elem = '<div class="tweet" style="display: none;">{0} &mdash; <a class="author" href="http://twitter.com/account/redirect_by_id?id={1}" target="_blank">@{2}</a></div>'.format(data.text, data.user_id, data.screen_name);
-        $('.tweets').prepend(elem);
-        var tweets = $('.tweet');
-        tweets.slideDown();
-        if (tweets.length > 12) {
-            $(tweets[tweets.length-1]).remove();
-        }
-
-        // Increment counter
-        var tweetCounter = $('.num_tweets');
-        tweetCounter.text(parseInt(tweetCounter.text()) + 1);
-    };
 });
