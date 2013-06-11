@@ -30,5 +30,9 @@ every 5.minutes do
 	command "ruby " + File.join(File.expand_path(File.dirname(__FILE__)), '../util/update_photos.rb')
 end
 
+every 2.minutes do
+	command "ruby " + File.join(File.expand_path(File.dirname(__FILE__)), '../util/generate_stats.rb')
+end
+
 #whenever --update-crontab store
 #crontab -l

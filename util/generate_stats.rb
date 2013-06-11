@@ -73,7 +73,7 @@ def show_popular_players()
 
 
   begin
-    item = CachedResult.find(:first, :conditions => ["name = top_players"])
+    item = CachedResult.where(:name => "top_players")[0]
     item.update_attributes(:result => show_popular_players())
   rescue Exception => e
     CachedResult.create(:name => 'top_players',:result => show_popular_players())
