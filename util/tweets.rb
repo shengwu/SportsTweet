@@ -35,25 +35,22 @@ TweetStream::Client.new.track('nba') do |tweet|
     Net::HTTP.post_form(uri, :message => message.to_json);
 
     # Save tweet to the database
-    if tweet.media != []
-      if Obscenity.profane?(tweet.text) == false
-        print "X"
-        t = Photo.create(:created_at => tweet.created_at,
-                       :favorite_count => tweet.favorite_count,
-                       :from_user_name => tweet.user.name,
-                       :hashtags => tweet.hashtags,
-                       :id_str => tweet.id.to_s,
-                       :media => tweet.media[0].media_url, 
-                       :place => tweet.place,
-                       :retweet_count => tweet.retweet_count,
-                       :text => tweet.text,
-                       :screen_name => tweet.user.screen_name,
-                       :urls => tweet.urls,
-                       :user_mentions => tweet.user_mentions,
-                       :user_id => tweet.user.id)
-      end
+    if tweet.media != [] and Obscenity.profane?(tweet.text) == false
+      t = Photo.create(:created_at => tweet.created_at,
+                     :favorite_count => tweet.favorite_count,
+                     :from_user_name => tweet.user.name,
+                     :hashtags => tweet.hashtags,
+                     :id_str => tweet.id.to_s,
+                     :media => tweet.media[0].media_url, 
+                     :place => tweet.place,
+                     :retweet_count => tweet.retweet_count,
+                     :text => tweet.text,
+                     :screen_name => tweet.user.screen_name,
+                     :urls => tweet.urls,
+                     :user_mentions => tweet.user_mentions,
+                     :user_id => tweet.user.id)
+      print "X"
     end
-    print "."
     t = Tweet.create(:created_at => tweet.created_at,
                    :favorite_count => tweet.favorite_count,
                    :from_user_name => tweet.user.name,
@@ -67,5 +64,6 @@ TweetStream::Client.new.track('nba') do |tweet|
                    :urls => tweet.urls,
                    :user_mentions => tweet.user_mentions,
                    :user_id => tweet.user.id)
+    print "."
   end
 end

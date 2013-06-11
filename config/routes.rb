@@ -1,4 +1,7 @@
 SportsTweet::Application.routes.draw do
+  resources :cached_results
+
+
   resources :photos
   resources :followers
   resources :tweets

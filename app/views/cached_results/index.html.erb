@@ -1,0 +1,25 @@
+<h1>Listing cached_results</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Result</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cached_results.each do |cached_result| %>
+  <tr>
+    <td><%= cached_result.name %></td>
+    <td><%= cached_result.result %></td>
+    <td><%= link_to 'Show', cached_result %></td>
+    <td><%= link_to 'Edit', edit_cached_result_path(cached_result) %></td>
+    <td><%= link_to 'Destroy', cached_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cached result', new_cached_result_path %>

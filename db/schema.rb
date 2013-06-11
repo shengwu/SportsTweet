@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130606134411) do
+ActiveRecord::Schema.define(:version => 20130611004721) do
+
+  create_table "cached_results", :force => true do |t|
+    t.string   "name"
+    t.text     "result"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "followers", :force => true do |t|
     t.integer  "guid"

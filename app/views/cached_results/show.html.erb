@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @cached_result.name %>
+</p>
+
+<p>
+  <b>Result:</b>
+  <%= @cached_result.result %>
+</p>
+
+
+<%= link_to 'Edit', edit_cached_result_path(@cached_result) %> |
+<%= link_to 'Back', cached_results_path %>
