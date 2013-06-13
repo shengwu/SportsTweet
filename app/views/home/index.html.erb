@@ -133,6 +133,11 @@
             return 0;
         }
     };
+    
+    // Multiply strings
+    String.prototype.repeat = function(num) {
+        return new Array(num + 1).join(this);
+    }
 
     // Drill down from teams -> players
     $('#chart').on('click', 'text', function() {
@@ -155,6 +160,7 @@
         $('.tweets').prepend(elem);
         var tweets = $('.tweet');
         tweets.slideDown();
+
         if (tweets.length > 12) {
             $(tweets[tweets.length-1]).remove();
         }
@@ -172,6 +178,7 @@
         $('.tweets').prepend("<p>A connection could not be established with the server that handles streaming tweets.</p>");
     }
 
+    // Tabs for bar chart
     $('.teams-label').click(function() {
         $.getJSON('/cached_results/name/top_teams.json', function(data) {
             var team_data = data.map(function(d, i) { 
