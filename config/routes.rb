@@ -1,7 +1,6 @@
 SportsTweet::Application.routes.draw do
   resources :cached_results
 
-
   resources :photos
   resources :followers
   resources :tweets
@@ -13,6 +12,7 @@ SportsTweet::Application.routes.draw do
 
   # For getting a list of players by no. of mentions
   match 'players/on_team/:team_name' => 'players#on_team'
+  match 'cached_results/name/:name' => 'cached_results#by_name'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

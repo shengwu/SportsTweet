@@ -21,6 +21,17 @@ class CachedResultsController < ApplicationController
     end
   end
 
+  # GET /cached_results/name/top_teams
+  # GET /cached_results/name/top_teams.json
+  def by_name
+    @cached_result = CachedResult.where("name = ?", params[:name])[0]
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @cached_result.result }
+    end
+  end
+
   # GET /cached_results/new
   # GET /cached_results/new.json
   def new

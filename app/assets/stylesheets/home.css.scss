@@ -24,11 +24,14 @@ a {
     color: white;
 }
 
+/* three column display */
 .left-col,
 #slides,
 .popular {
     display: inline-block;
 }
+
+/* left: logo and info */
 .left-col {
     padding: 0 10px;
     width: 260px;
@@ -41,18 +44,40 @@ a {
 .logo {
     width: 230px;
 }
+.num_tweets,
+.elapsed_minutes {
+    font-weight: bold;
+}
+
+/* right: bar chart */
 .chart {
-    margin-top: 10px;
     background-color: #222;
 }
 .chart text {
     fill: white;
 }
-.teams text {
+.teams-label {
+    margin-left: 20px;
+}
+.teams-label,
+.players-label {
+    display: inline-block;
+    padding: 10px;
+    background-color: #222;
     cursor: pointer;
 }
-.teams text:hover {
-    text-decoration: underline;
+.teams-label:hover,
+.players-label:hover {
+    background-color: #555;
+}
+.active-label {
+    background-color: #555;
+}
+.chart text {
+    cursor: pointer;
+}
+.chart text:hover {
+    fill: #ddd;
 }
 
 .tweet_container {

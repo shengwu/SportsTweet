@@ -2,27 +2,7 @@ require "uri"
 
 module HomeHelper
   def show_popular_teams()
-    # Get all tweets and all team names
-    tweets = Tweet.select("text").map{|tweet| tweet.text}
-    team_names = Team.select("name").map{|team| team.name}
-    teams = Hash[*team_names.zip([0]*team_names.length).flatten]
-
-    # Counts mentions of NBA teams
-    # e.g. "Miami Heat", counts tweets containing "miami" or "heat"
-    tweets.each do |tweet|
-      teams.each do |team, count|
-        # Split name into city and team name
-        fragments = team.downcase.split
-        city = fragments[0..-2].join(' ')
-        name = fragments.last
-        if tweet.downcase.include? city or tweet.downcase.include? name
-          teams[team] += 1
-        end
-      end
-    end
-
-    # Return the 10 most mentioned teams
-    teams.sort_by{|_key, value| value}.reverse[0..9]
+    CachedResult.where(:name => "top_teams")[0].result
   end
 
   def show_popular_players()
