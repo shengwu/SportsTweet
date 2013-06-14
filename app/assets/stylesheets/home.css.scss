@@ -91,10 +91,9 @@ a {
 .teams-label {
     margin-left: 20px;
 }
-.teams-label,
-.players-label {
+.mention-label {
     display: inline-block;
-    padding: 10px;
+    padding: 8px 14px;
     background-color: #222;
     cursor: pointer;
 }
@@ -104,6 +103,9 @@ a {
 }
 .active-label {
     background-color: #555;
+}
+.mention-label {
+    text-align: center;
 }
 /* drilldown styles -- disabled
 .chart text {
@@ -134,4 +136,17 @@ h1 {
 }
 td {
     padding-right: 20px;
+}
+
+/* responsive - mobile */
+@media all and (max-width: 600px) {
+    .popular {
+        width: 400px;
+    }
+    .left-col,
+    #slides,
+    .popular {
+        margin: 10px auto;
+        display: block;
+    }
 }

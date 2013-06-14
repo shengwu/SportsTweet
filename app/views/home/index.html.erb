@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>SportsTweet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="<%= @faye_server %>.js"></script>
     <%= javascript_include_tag "jquery.slides.min.js" %>
@@ -52,17 +53,24 @@
 
         // Set up initial bar graph
         var w = 400,
-            h = 400,
-            colors = d3.scale.category20();
+            h = 400;
+
+        var colors = [d3.scale.category20(), d3.scale.category20b()];
+        var colorScheme = 1;
      
-        var data = [
+        var team_data = [
             <% show_popular_teams.each do |team, count| %>
-              {"label":"<%= team %>", "value": <%= count %>},
+              {"label":"<%= team.html_safe %>", "value": <%= count %>},
+            <% end %>
+        ];
+        var player_data = [
+            <% show_popular_players.each do |player, count| %>
+              {"label":"<%= player.html_safe %>", "value": <%= count %>},
             <% end %>
         ];
         var chart = d3.select("#chart")
                       .attr("width", w)
-                      .attr("height", h)
+                      .attr("height", h);
 
         // function to draw a bar graph
         // data is a list of {"label": ..., "value": ...} pairs
@@ -72,6 +80,7 @@
             var x = d3.scale.linear()
                       .domain([0, d3.max(values)])
                       .range([0, w]);
+            colorScheme = (colorScheme + 1) % colors.length;
 
             // If we're drawing something with same number of bars,
             // we can use transitions
@@ -79,12 +88,14 @@
                 chart.selectAll("rect")
                      .data(values)
                      .transition()
-                     .attr("width", x);
+                     .attr("width", x)
+                     .style("fill", function(d, i) { return colors[colorScheme](i); });
 
                 chart.selectAll("text")
                      .data(values)
                      .transition()
                      .attr("name", function(d, i) { return data[i].label; })
+                     .attr("value", function(d, i) { return data[i].value; })
                      .text(function(d, i) { 
                          return "{0} ({1} mentions)".format(data[i].label, d); 
                      });
@@ -104,7 +115,7 @@
                  .attr("y", function(d, i) { return i*barHeight; })
                  .attr("width", x)
                  .attr("height", barHeight)
-                 .style("fill", function(d, i) { return colors(i); });
+                 .style("fill", function(d, i) { return colors[colorScheme](i); });
 
             chart.selectAll("text")
                  .data(values)
@@ -114,6 +125,7 @@
                  .attr("dx", -3)
                  .attr("dy", ".35em")
                  .attr("name", function(d, i) { return data[i].label; })
+                 .attr("value", function(d, i) { return data[i].value; })
                  .text(function(d, i) { 
                      return "{0} ({1} mentions)".format(data[i].label, d); 
                  });
@@ -121,7 +133,7 @@
             return chart;
         }
 
-        drawGraph(chart, data);
+        drawGraph(chart, team_data);
 
     // Compare function for sorting an array of
     // [{"label": "some_name", "value": 23}] values by descending count
@@ -164,7 +176,21 @@
         $('.tweets').prepend(elem);
         var tweets = $('.tweet');
         tweets.slideDown();
-        console.log(data.mentions);
+
+        // Update page
+        for (var entity in data.mentions) {
+            var text = d3.select('[name="{0}"]'.format(entity));
+
+            // Increment mentions
+            incrementCount(player_data, entity);
+            incrementCount(team_data, entity);
+            text.attr('value', parseInt(text.attr('value')) + 1);
+            text.text('{0} ({1} mentions)'.format(text.attr('name'),
+                  parseInt(text.attr('value'))));
+
+            // Flash bar color
+            
+        }
 
         if (tweets.length > 12) {
             $(tweets[tweets.length-1]).remove();
@@ -173,6 +199,15 @@
         // Increment counter
         var tweetCounter = $('.num_tweets');
         tweetCounter.text(parseInt(tweetCounter.text()) + 1);
+    };
+
+    // Increment count for a given value
+    var incrementCount = function(list, value) {
+        $.each(list, function(i, el) {
+            if (el.label === value) {
+                list[i].value += 1;
+            }
+        });
     };
 
     // Connect to Faye message server
@@ -185,26 +220,26 @@
 
     // Tabs for bar chart
     $('.teams-label').click(function() {
-        $.getJSON('/cached_results/name/top_teams.json', function(data) {
-            var team_data = data.map(function(d, i) { 
-                return {"label": d[0], "value": d[1]}
-            }).sort(data_compare);
+        if ($(this).hasClass('active-label')) {
+            return;
+        }
 
-            // Redraw chart
-            drawGraph(chart, team_data);
-        });
+        // Redraw chart
+        team_data.sort(data_compare);
+        drawGraph(chart, team_data);
+
         $('.mention-label').removeClass('active-label');
         $(this).addClass('active-label');
     });
     $('.players-label').click(function() {
-        $.getJSON('/cached_results/name/top_players.json', function(data) {
-            player_data = data.map(function(d, i) { 
-                return {"label": d[0], "value": d[1]}
-            }).sort(data_compare);
+        if ($(this).hasClass('active-label')) {
+            return;
+        }
 
-            // Redraw chart
-            drawGraph(chart, player_data);
-        });
+        // Redraw chart
+        player_data.sort(data_compare);
+        drawGraph(chart, player_data);
+
         $('.mention-label').removeClass('active-label');
         $(this).addClass('active-label');
     });
