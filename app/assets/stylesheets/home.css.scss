@@ -7,6 +7,10 @@
     padding: 0;
 }
 
+html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
 html,
 body {
     background: black;
@@ -50,8 +54,31 @@ a {
 }
 
 /* center: slideshow */
+#slides {
+    margin-bottom: 10px;
+    padding-right: 20px;
+    width: 400px;
+}
 .slidesjs-slide {
     background: #232321;
+    height: 100%;
+    text-align: center;
+}
+.slidesjs-slide img.wide {
+    width: 100%;
+}
+.slidesjs-slide img.tall {
+    height: 100%;
+}
+.caption {
+    position: absolute;
+    bottom: 0;
+    width: 380px;
+    background: rgba(0, 0, 0, .7);
+    padding: 4px 10px 7px;
+}
+.slidesjs-next {
+    float: right;
 }
 
 /* right: bar chart */
@@ -78,13 +105,16 @@ a {
 .active-label {
     background-color: #555;
 }
+/* drilldown styles -- disabled
 .chart text {
     cursor: pointer;
 }
 .chart text:hover {
     fill: #ddd;
 }
+*/
 
+/* bottom: tweets */
 .tweet_container {
     clear: both;
     border-top: 1px solid #555;
@@ -104,31 +134,4 @@ h1 {
 }
 td {
     padding-right: 20px;
-}
-
-/* slides */
-#slides {
-    margin-bottom: 10px;
-    padding-right: 20px;
-    width: 400px;
-}
-.slidesjs-slide {
-    height: 100%;
-    text-align: center;
-}
-.slidesjs-slide img.wide {
-    width: 100%;
-}
-.slidesjs-slide img.tall {
-    height: 100%;
-}
-.caption {
-    position: absolute;
-    bottom: 0;
-    width: 380px;
-    background: rgba(0, 0, 0, .7);
-    padding: 4px 10px 7px;
-}
-.slidesjs-next {
-    float: right;
 }

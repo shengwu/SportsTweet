@@ -84,6 +84,7 @@
                 chart.selectAll("text")
                      .data(values)
                      .transition()
+                     .attr("name", function(d, i) { return data[i].label; })
                      .text(function(d, i) { 
                          return "{0} ({1} mentions)".format(data[i].label, d); 
                      });
@@ -140,6 +141,8 @@
     }
 
     // Drill down from teams -> players
+    // (disabled for now)
+    /*
     $('#chart').on('click', 'text', function() {
         var team = $(this).attr('name');
         $.getJSON('/players/on_team/{0}.json'.format(team), function(data) {
@@ -153,6 +156,7 @@
             $('#chart').children('text').removeClass('teams-filter');
         });
     });
+    */
 
     // Connect to a stream of tweets
     var addIncomingTweet = function(data) {
@@ -160,6 +164,7 @@
         $('.tweets').prepend(elem);
         var tweets = $('.tweet');
         tweets.slideDown();
+        console.log(data.mentions);
 
         if (tweets.length > 12) {
             $(tweets[tweets.length-1]).remove();
@@ -193,7 +198,7 @@
     });
     $('.players-label').click(function() {
         $.getJSON('/cached_results/name/top_players.json', function(data) {
-            var player_data = data.map(function(d, i) { 
+            player_data = data.map(function(d, i) { 
                 return {"label": d[0], "value": d[1]}
             }).sort(data_compare);
 
@@ -202,6 +207,25 @@
         });
         $('.mention-label').removeClass('active-label');
         $(this).addClass('active-label');
+    });
+
+    // Cycle through the bar graphs
+    var barGraphCycleInterval = 5300;
+    var cycleBarGraphs = function() {
+        if (!$('.popular').hasClass('hover')) {
+            if ($('.players-label').hasClass('active-label')) {
+                $('.teams-label').click();
+            } else {
+                $('.players-label').click();
+            }
+        }
+        window.setTimeout(cycleBarGraphs, barGraphCycleInterval);
+    };
+    window.setTimeout(cycleBarGraphs, barGraphCycleInterval);
+
+    // Pause on hover for cycling
+    $('.popular').on('mouseenter mouseleave', function() {
+        $(this).toggleClass('hover');
     });
 
     </script>
