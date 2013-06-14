@@ -7,7 +7,7 @@ SportsTweet is a app for sports journalists and fans looking to track what sport
 After cloning the repo, you'll want to create a database user for SportsTweet. Put the name and password in `config/database.yml` (or set DATABASE_URL). Running `rake db:migrate` should create the necessary tables, and running the csv imports below will populate them with team and player information.
 
 ## Running the application
-From the root directory of this repo, run the following commands:
+From the root directory of this repo, run the following commands concurrently (by running them in the background or using different terminals):
 ```bash
 rails s
 rackup faye.ru -s thin -E production
