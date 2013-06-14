@@ -3,13 +3,15 @@ SportsTweet
 
 SportsTweet is a app for sports journalists and fans looking to track what sports topics are being tweeted about most. It aggregates tweets to visually summarize the most popular topics for a given sport, including athletes, teams, games, or moments. For our work in the Innovation in Journalism and Tech class, we limited the scope to basketball.
 
+## Getting started
+After cloning the repo, you'll want to create a database user for SportsTweet. Put the name and password in `config/database.yml` (or set DATABASE_URL). Running `rake db:migrate` should create the necessary tables, and running the csv imports below will populate them with team and player information.
+
 ## Running the application
 From the root directory of this repo, run the following commands:
 ```bash
 rails s
-rackup faye.ru -s thin -E productio
+rackup faye.ru -s thin -E production
 ruby util/tweets.rb
-ruby util/scrape.rb
 ```
 
 ## Updating the crontab
