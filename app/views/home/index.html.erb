@@ -55,8 +55,8 @@
         var w = 400,
             h = 400;
 
-        var colors = [d3.scale.category20(), d3.scale.category20b()];
-        var colorScheme = 1;
+        var color = d3.scale.category20();
+        var colorOffset = 3;
      
         var team_data = [
             <% show_popular_teams.each do |team, count| %>
@@ -80,7 +80,7 @@
             var x = d3.scale.linear()
                       .domain([0, d3.max(values)])
                       .range([0, w]);
-            colorScheme = (colorScheme + 1) % colors.length;
+            colorOffset = colorOffset == 3? 0 : 3;
 
             // If we're drawing something with same number of bars,
             // we can use transitions
@@ -89,7 +89,9 @@
                      .data(values)
                      .transition()
                      .attr("width", x)
-                     .style("fill", function(d, i) { return colors[colorScheme](i); });
+                     .attr("name", function(d, i) { return data[i].label; })
+                     .attr("origFill", function(d, i) { return color(i + colorOffset); })
+                     .style("fill", function(d, i) { return color(i + colorOffset); });
 
                 chart.selectAll("text")
                      .data(values)
@@ -115,7 +117,9 @@
                  .attr("y", function(d, i) { return i*barHeight; })
                  .attr("width", x)
                  .attr("height", barHeight)
-                 .style("fill", function(d, i) { return colors[colorScheme](i); });
+                 .attr("name", function(d, i) { return data[i].label; })
+                 .attr("origFill", function(d, i) { return color(i + colorOffset); })
+                 .style("fill", function(d, i) { return color(i + colorOffset); });
 
             chart.selectAll("text")
                  .data(values)
@@ -179,7 +183,11 @@
 
         // Update page
         for (var entity in data.mentions) {
-            var text = d3.select('[name="{0}"]'.format(entity));
+            var text = d3.select('text[name="{0}"]'.format(entity));
+            var rect = d3.select('rect[name="{0}"]'.format(entity));
+            if (text[0][0] === null) {
+                continue;
+            }
 
             // Increment mentions
             incrementCount(player_data, entity);
@@ -189,7 +197,11 @@
                   parseInt(text.attr('value'))));
 
             // Flash bar color
-            
+            var oldColor = d3.rgb(rect.attr('origFill'));
+            rect.style('fill', oldColor.brighter());
+            rect.transition()
+                .duration(400)
+                .style('fill', oldColor);
         }
 
         if (tweets.length > 12) {
